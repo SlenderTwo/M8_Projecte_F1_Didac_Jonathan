@@ -1,8 +1,7 @@
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
-    id("com.google.gms.google-services")
-}
+    id("com.google.gms.google-services")}
 
 android {
     namespace = "com.example.m8_projecte_f1_2"
