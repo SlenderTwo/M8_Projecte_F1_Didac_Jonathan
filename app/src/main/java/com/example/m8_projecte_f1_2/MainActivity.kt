@@ -1,5 +1,6 @@
 package com.example.m8_projecte_f1_2
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
@@ -16,7 +17,8 @@ class MainActivity : AppCompatActivity() {
         }
         BTMREGISTRO.setOnClickListener(){
             Toast.makeText(this, "click botó Registre",Toast.LENGTH_LONG).show();
-            setContentView(R.layout.activity_registre)
+            val intent = Intent(this,Registre::class.java)
+            startActivity(intent)
         }
     }
 }
