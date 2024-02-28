@@ -10,6 +10,8 @@ import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import java.text.DateFormat.getDateInstance
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -24,6 +26,8 @@ class Registre : AppCompatActivity() {
     lateinit var fechaTxt :TextView
     lateinit var Registrar :Button
     lateinit var auth: FirebaseAuth //FIREBASE AUTENTIFICACIO
+
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -80,6 +84,11 @@ class Registre : AppCompatActivity() {
                     //updateUI(null)
                 }
             }
+
+
+
+
+
     }
     fun updateUI(user: FirebaseUser?){
         //hi ha un interrogant perquè podria ser null
@@ -91,13 +100,38 @@ class Registre : AppCompatActivity() {
             var passString: String = passEt.getText().toString()
             var nombreString: String = nombreEt.getText().toString()
             var fechaString: String= fechaTxt.getText().toString()
+
             //AQUI GUARDA EL CONTINGUT A LA BASE DE DADES
-// FALTA FER
+            // Utilitza un HashMap
+            var dadesJugador : HashMap<String,String> = HashMap<String, String>()
+            dadesJugador.put ("Uid",uidString)
+            dadesJugador.put ("Email",correoString)
+            dadesJugador.put ("Password",passString)
+            dadesJugador.put ("Nom",nombreString)
+            dadesJugador.put ("Data",fechaString)
+            dadesJugador.put ("Puntuacio", puntuacio.toString())
+
+            // Creem un punter a la base de dades i li donem un nom
+            var database: FirebaseDatabase = FirebaseDatabase.getInstance("https://m8-projecte-f1-2-default-rtdb.europe-west1.firebasedatabase.app/")
+            var reference: DatabaseReference = database.getReference("DATA BASE JUGADORS")
+            if(reference!=null) {
+                //crea un fill amb els valors de dadesJugador
+                reference.child(uidString).setValue(dadesJugador)
+                Toast.makeText(this, "USUARI BEN REGISTRAT",
+                    Toast.LENGTH_SHORT).show()
+            }
+            else{
+                Toast.makeText(this, "ERROR BD", Toast.LENGTH_SHORT).show()
+            }
+            finish()
         }
         else
         {
             Toast.makeText( this,"ERROR CREATE USER",Toast.LENGTH_SHORT).show()
         }
+
+
+
     }
 
 }
