@@ -55,7 +55,7 @@ class Registre : AppCompatActivity() {
 
         Registrar.setOnClickListener() {
             //Abans de fer el registre validem les dades
-            33
+
             var email: String = correoEt.getText().toString()
             var pass: String = passEt.getText().toString()
             // validació del correu
@@ -72,7 +72,7 @@ class Registre : AppCompatActivity() {
     fun RegistrarJugador(email:String, passw:String){
         auth.createUserWithEmailAndPassword(email, passw)
             .addOnCompleteListener(this) { task ->
-                34
+
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
                     Toast.makeText(
