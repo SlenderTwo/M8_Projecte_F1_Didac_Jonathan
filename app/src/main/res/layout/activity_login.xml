@@ -13,20 +13,35 @@
         android:gravity="center"
         android:orientation="vertical"
         android:padding="30dp">
-        <!-- ENTREM EL MAIL -->
-        <EditText
-            android:id="@+id/correoLogin"
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <!-- ENTREM EL MAIL -->
+            <EditText
+                android:id="@+id/correoLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
+                android:hint="@string/correoLogin" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="textEmailAddress"
-            android:hint="@string/correoLogin" />
-        <!-- ENTREM EL PASSWORD -->
-        <EditText
-            android:id="@+id/passLogin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:inputType="textPassword"
-            android:hint="@string/passLogin" />
+            app:passwordToggleEnabled="true">
+
+
+
+            <!-- ENTREM EL PASSWORD -->
+            <EditText
+                android:id="@+id/passLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:inputType="textPassword"
+                android:hint="@string/passLogin" />
+        </com.google.android.material.textfield.TextInputLayout>
         <!-- BOTO DE ENTRAR -->
         <Button
             android:id="@+id/BtnLogin"
