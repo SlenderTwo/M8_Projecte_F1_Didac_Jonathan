@@ -10,4 +10,6 @@
     <string name="correoLogin">E-mail</string>
     <string name="passLogin">Password</string>
     <string name="BtnLogin">ENTRAR</string>
+    <string name="TancarSessio">Tancar Sessió</string>
+
 </resources>
