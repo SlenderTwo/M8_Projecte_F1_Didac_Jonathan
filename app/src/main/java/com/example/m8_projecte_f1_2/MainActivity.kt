@@ -23,4 +23,17 @@ class MainActivity : AppCompatActivity() {
             startActivity(intent)
         }
     }
+    // Aquest mètode s'executarà quan s'obri el menu
+    override fun onStart() {
+        usuariLogejat()
+        super.onStart()
+    }
+    private fun usuariLogejat() {
+        if (user !=null)
+        {
+            val intent= Intent(this, Menu::class.java)
+            startActivity(intent)
+            finish()
+        }
+    }
 }
