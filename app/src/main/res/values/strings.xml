@@ -1,13 +1,13 @@
 <resources>
     <string name="app_name">M8_Projecte_f1_2</string>
-
     <string name="BTMLOGIN">Login</string>
     <string name="BTMREGISTRO">Registre</string>
-
     <string name="correoEt">E-mail</string>
     <string name="nombreEt">Nom</string>
     <string name="passEt">Password</string>
     <string name="fechaTxt">Data</string>
     <string name="Registrar">REGISTRAR</string>
-
+    <string name="correoLogin">E-mail</string>
+    <string name="passLogin">Password</string>
+    <string name="BtnLogin">ENTRAR</string>
 </resources>

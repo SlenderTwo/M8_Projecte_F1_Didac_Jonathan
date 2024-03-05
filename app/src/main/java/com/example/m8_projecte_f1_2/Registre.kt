@@ -1,5 +1,6 @@
 package com.example.m8_projecte_f1_2
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -119,6 +120,8 @@ class Registre : AppCompatActivity() {
                 reference.child(uidString).setValue(dadesJugador)
                 Toast.makeText(this, "USUARI BEN REGISTRAT",
                     Toast.LENGTH_SHORT).show()
+                val intent= Intent(this,Menu::class.java)
+                startActivity(intent)
             }
             else{
                 Toast.makeText(this, "ERROR BD", Toast.LENGTH_SHORT).show()
