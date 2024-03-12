@@ -64,6 +64,8 @@
             android:layout_height="wrap_content"
             android:text="@string/jugarBtn"
             android:layout_marginTop="10dp"
+            android:background="@drawable/botopropi"
+            android:textColor="@color/black"
             />
         <!-- BOTO DE puntuacions -->
         <Button
@@ -72,6 +74,8 @@
             android:layout_height="wrap_content"
             android:text="@string/PuntuacionsBtn"
             android:layout_marginTop="10dp"
+            android:background="@drawable/botopropi"
+            android:textColor="@color/black"
             />
         <!-- BOTO DE Credits -->
         <Button
@@ -80,6 +84,8 @@
             android:layout_height="wrap_content"
             android:text="@string/CreditsBtn"
             android:layout_marginTop="10dp"
+            android:background="@drawable/botopropi"
+            android:textColor="@color/black"
             />
         <!-- BOTO DE Tancar sessió -->
         <Button
@@ -88,6 +94,8 @@
             android:layout_height="wrap_content"
             android:text="@string/tancarSessio"
             android:layout_marginTop="10dp"
+            android:background="@drawable/botopropi"
+            android:textColor="@color/black"
             />
     </LinearLayout>
 </ScrollView>
