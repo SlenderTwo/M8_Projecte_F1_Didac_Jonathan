@@ -105,6 +105,7 @@ class Menu : AppCompatActivity() {
         {
             Toast.makeText(this,"Jugador logejat",
                 Toast.LENGTH_SHORT).show()
+            consulta()
         }
         else
         {
@@ -123,7 +124,7 @@ class Menu : AppCompatActivity() {
         // arrel
         // - nivell dos
         // - nivell dos.1
-// - nom: "pepe"
+        // - nom: "pepe"
         // - dni: "1231212121"
         // - nivell dos.2: "34"
         // - nivell dos.3: "36"
@@ -140,39 +141,43 @@ class Menu : AppCompatActivity() {
                 // els subnodes (fills) es recuperen amb getChildren
                 // es poden llegir com un llistat d'objectes Datasnapshots
         // o navegar a subnodes concrets amb child("nomdelsubnode")
-        var database: FirebaseDatabase = FirebaseDatabase.getInstance("https://montserratak-76f14-defaultrtdb.europe-west1.firebasedatabase.app/")
+        var database: FirebaseDatabase = FirebaseDatabase.getInstance("https://m8-projecte-f1-2-default-rtdb.europe-west1.firebasedatabase.app/")
         var bdreference:DatabaseReference = database.getReference("DATA BASE JUGADORS")
-        bdreference.addValueEventListener (object: ValueEventListener {
+
+        bdreference.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.i ("DEBUG","arrel value"+
+                Log.i ("pepe","arrel value"+
                         snapshot.getValue().toString())
-                Log.i ("DEBUG","arrel key"+ snapshot.key.toString())
+                Log.i ("pepe","arrel key"+ snapshot.key.toString())
                 // ara capturem tots els fills
-                var trobat:Boolean =false
+                var trobat:Boolean = false
                 for (ds in snapshot.getChildren()) {
-                    Log.i ("DEBUG","DS key:"+ds.child("Uid").key.toString())
-                    Log.i ("DEBUG","DS value:"+ds.child("Uid").getValue().toString())
-                    Log.i ("DEBUG","DS data:"+ds.child("Data").getValue().toString())
-                    Log.i ("DEBUG","DS mail:"+ds.child("Email").getValue().toString())
+                    Log.i ("pepe","DS key:"+ds.child("Uid").key.toString())
+                    Log.i ("pepe","DS value:"+ds.child("Uid").getValue().toString())
+                    Log.i ("pepe","DS data:"+ds.child("Data").getValue().toString())
+                    Log.i ("pepe","DS mail:"+ds.child("Email").getValue().toString())
                     //mirem si el mail és el mateix que el del jugador
                     //si és així, mostrem les dades als textview corresponents
+
                     if (ds.child("Email").getValue().toString().equals(user?.email)){
                         trobat=true
-                    } //carrega els textview
+
+                        //carrega els textview
                         puntuacio.setText(ds.child("Puntuacio").getValue().toString())
                         uid.setText(ds.child("Uid").getValue().toString())
                         correo.setText(ds.child("Email").getValue().toString())
                         nom.setText(ds.child("Nom").getValue().toString())
-                }
-                if (!trobat)
-                {
+                    }
+                    if (!trobat)
+                    {
                     Log.e ("ERROR","ERROR NO TROBAT MAIL")
+                    }
                 }
-            }
-        }
-                override fun onCancelled(error: DatabaseError) {
-                    Log.e ("ERROR","ERROR DATABASE CANCEL")
-        })
-        }
 
+            }
+            override fun onCancelled(error: DatabaseError) {
+                Log.e ("ERROR","ERROR DATABASE CANCEL")
+            }
+        })
     }
+}
