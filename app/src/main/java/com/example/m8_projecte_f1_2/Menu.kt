@@ -1,9 +1,11 @@
 package com.example.m8_projecte_f1_2
 
 import android.content.Intent
+import android.graphics.Typeface
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
+import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -15,6 +17,12 @@ class Menu : AppCompatActivity() {
     lateinit var CreditsBtn: Button
     lateinit var PuntuacionsBtn: Button
     lateinit var jugarBtn: Button
+
+    lateinit var miPuntuaciotxt: TextView
+    lateinit var puntuacio: TextView
+    lateinit var uid: TextView
+    lateinit var correo: TextView
+    lateinit var nom: TextView
 
     var user: FirebaseUser? = null;
 
@@ -44,7 +52,27 @@ class Menu : AppCompatActivity() {
             Toast.makeText(this,"JUGAR", Toast.LENGTH_SHORT).show()
         }
 
+        //Aquí creem un tipus de lletra a partir de una font
+        val tf = Typeface.createFromAsset(assets,"fonts/DejaVuSans.ttf")
 
+        miPuntuaciotxt=findViewById(R.id.miPuntuaciotxt)
+        puntuacio=findViewById(R.id.puntuacio)
+        uid=findViewById(R.id.uid)
+        correo=findViewById(R.id.correo)
+        nom=findViewById(R.id.nom)
+
+        //els hi assignem el tipus de lletra
+        miPuntuaciotxt.setTypeface(tf)
+        puntuacio.setTypeface(tf)
+        uid.setTypeface(tf)
+        correo.setTypeface(tf)
+        nom.setTypeface(tf)
+
+        //fem el mateix amb el text dels botons
+        tancarSessio.setTypeface(tf)
+        CreditsBtn.setTypeface(tf)
+        PuntuacionsBtn.setTypeface(tf)
+        jugarBtn.setTypeface(tf)
 
 
     }
