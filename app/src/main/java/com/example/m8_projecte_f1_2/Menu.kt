@@ -12,6 +12,9 @@ class Menu : AppCompatActivity() {
     //creem unes variables per comprovar ususari i authentificació
     lateinit var auth: FirebaseAuth
     lateinit var tancarSessio: Button
+    lateinit var CreditsBtn: Button
+    lateinit var PuntuacionsBtn: Button
+    lateinit var jugarBtn: Button
 
     var user: FirebaseUser? = null;
 
@@ -25,6 +28,23 @@ class Menu : AppCompatActivity() {
         tancarSessio.setOnClickListener(){
             tancalaSessio()
         }
+
+        tancarSessio =findViewById<Button>(R.id.tancarSessio)
+        CreditsBtn =findViewById<Button>(R.id.CreditsBtn)
+        PuntuacionsBtn =findViewById<Button>(R.id.PuntuacionsBtn)
+        jugarBtn =findViewById<Button>(R.id.jugarBtn)
+
+        CreditsBtn.setOnClickListener(){
+            Toast.makeText(this,"Credits", Toast.LENGTH_SHORT).show()
+        }
+        PuntuacionsBtn.setOnClickListener(){
+            Toast.makeText(this,"Puntuacions", Toast.LENGTH_SHORT).show()
+        }
+        jugarBtn.setOnClickListener(){
+            Toast.makeText(this,"JUGAR", Toast.LENGTH_SHORT).show()
+        }
+
+
 
 
     }
