@@ -45,6 +45,8 @@ class Login : AppCompatActivity() {
             else
             {
                 // aquí farem LOGIN al jugador
+                LogindeJugador(email, passw)
+
             }
         }
 
