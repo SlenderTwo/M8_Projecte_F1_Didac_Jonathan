@@ -1,101 +1,98 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:background="#58FA58"
+    android:layout_height="match_parent"
     android:layout_gravity="center"
+    android:background="#FFFFFF"
     tools:context=".Menu">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
         android:orientation="vertical"
         android:padding="30dp">
+
         <!-- Text La meva puntuació -->
         <TextView
+            android:id="@+id/miPuntuaciotxt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/miPuntuaciotxt"
+            android:gravity="center"
             android:text="@string/miPuntuaciotxt"
-            android:textSize="30sp"
-            android:gravity="center"/>
+            android:textSize="30sp" />
         <!-- contingut puntuació -->
         <TextView
+            android:id="@+id/puntuacio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/puntuacio"
-            android:text="@string/puntuacio"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="@string/puntuacio" />
         <!-- Imatge alien -->
         <androidx.appcompat.widget.AppCompatImageView
+            android:id="@+id/alienimagen"
             android:layout_width="180dp"
             android:layout_height="180dp"
-            android:id="@+id/alienimagen"
             android:src="@drawable/imagef1" />
         <!-- uid -->
         <TextView
+            android:id="@+id/uid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/uid"
-            android:text="@string/uid"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="@string/uid" />
         <!-- correu -->
         <TextView
+            android:id="@+id/correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/correo"
-            android:text="@string/correo"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="@string/correo" />
 
         <!-- nom -->
         <TextView
+            android:id="@+id/nom"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/nom"
-            android:text="@string/nom"
-            android:gravity="center"/>
+            android:gravity="center"
+            android:text="@string/nom" />
         <!-- BOTO DE jugar -->
         <Button
             android:id="@+id/jugarBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/jugarBtn"
             android:layout_marginTop="10dp"
             android:background="@drawable/botopropi"
-            android:textColor="@color/black"
-            />
+            android:text="@string/jugarBtn"
+            android:textColor="@color/black" />
         <!-- BOTO DE puntuacions -->
         <Button
             android:id="@+id/PuntuacionsBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/PuntuacionsBtn"
             android:layout_marginTop="10dp"
             android:background="@drawable/botopropi"
-            android:textColor="@color/black"
-            />
+            android:text="@string/PuntuacionsBtn"
+            android:textColor="@color/black" />
         <!-- BOTO DE Credits -->
         <Button
             android:id="@+id/CreditsBtn"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/CreditsBtn"
             android:layout_marginTop="10dp"
             android:background="@drawable/botopropi"
-            android:textColor="@color/black"
-            />
+            android:text="@string/CreditsBtn"
+            android:textColor="@color/black" />
         <!-- BOTO DE Tancar sessió -->
         <Button
             android:id="@+id/tancarSessio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/tancarSessio"
             android:layout_marginTop="10dp"
             android:background="@drawable/botopropi"
-            android:textColor="@color/black"
-            />
+            android:text="@string/tancarSessio"
+            android:textColor="@color/black" />
     </LinearLayout>
 </ScrollView>

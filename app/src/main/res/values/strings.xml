@@ -23,4 +23,7 @@
     <string name="PuntuacionsBtn">Puntuacions</string>
     <string name="CreditsBtn">Crèdits</string>
 
+    <string name="edatEt">Edat</string>
+    <string name="poblacioEt">Població</string>
+
 </resources>
