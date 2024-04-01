@@ -25,5 +25,9 @@
 
     <string name="edatEt">Edat</string>
     <string name="poblacioEt">Població</string>
+    <string name="edat"> -- </string>
+    <string name="poblacio"> -- </string>
+    <string name="editarBtn">Canviar Imatge</string>
+
 
 </resources>

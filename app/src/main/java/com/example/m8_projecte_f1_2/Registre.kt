@@ -28,6 +28,9 @@ class Registre : AppCompatActivity() {
     lateinit var Registrar :Button
     lateinit var auth: FirebaseAuth //FIREBASE AUTENTIFICACIO
 
+    lateinit var edatEt :EditText
+    lateinit var poblacioEt :EditText
+
 
 
 
@@ -41,6 +44,9 @@ class Registre : AppCompatActivity() {
         nombreEt = findViewById<EditText>(R.id.nombreEt)
         fechaTxt = findViewById<TextView>(R.id.fechaEt)
         Registrar = findViewById<Button>(R.id.Registrar)
+        edatEt =findViewById<EditText>(R.id.edatEt)
+        poblacioEt =findViewById<EditText>(R.id.poblacioEt)
+
 
 
         //carreguem la data al TextView
@@ -102,6 +108,10 @@ class Registre : AppCompatActivity() {
             var nombreString: String = nombreEt.getText().toString()
             var fechaString: String= fechaTxt.getText().toString()
 
+            var edatString = edatEt.getText().toString()
+            var poblacioString = poblacioEt.getText().toString()
+
+
             //AQUI GUARDA EL CONTINGUT A LA BASE DE DADES
             // Utilitza un HashMap
             var dadesJugador : HashMap<String,String> = HashMap<String, String>()
@@ -110,6 +120,9 @@ class Registre : AppCompatActivity() {
             dadesJugador.put ("Password",passString)
             dadesJugador.put ("Nom",nombreString)
             dadesJugador.put ("Data",fechaString)
+            dadesJugador.put ("Edat",edatString)
+            dadesJugador.put ("Poblacio",poblacioString)
+            dadesJugador.put ("Imatge","")
             dadesJugador.put ("Puntuacio", puntuacio.toString())
 
             // Creem un punter a la base de dades i li donem un nom

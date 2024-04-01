@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.Button
+import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import com.google.firebase.auth.FirebaseAuth
@@ -15,6 +16,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 
 class Menu : AppCompatActivity() {
     //creem unes variables per comprovar ususari i authentificació
@@ -23,12 +25,19 @@ class Menu : AppCompatActivity() {
     lateinit var CreditsBtn: Button
     lateinit var PuntuacionsBtn: Button
     lateinit var jugarBtn: Button
+    lateinit var editarBtn: Button
+
 
     lateinit var miPuntuaciotxt: TextView
     lateinit var puntuacio: TextView
     lateinit var uid: TextView
     lateinit var correo: TextView
     lateinit var nom: TextView
+    lateinit var edat: TextView
+    lateinit var poblacio: TextView
+
+    lateinit var imatgePerfil: ImageView
+
 
     //reference serà el punter que ens envia a la base de dades de jugadors
     lateinit var reference: DatabaseReference
@@ -51,6 +60,7 @@ class Menu : AppCompatActivity() {
         CreditsBtn =findViewById<Button>(R.id.CreditsBtn)
         PuntuacionsBtn =findViewById<Button>(R.id.PuntuacionsBtn)
         jugarBtn =findViewById<Button>(R.id.jugarBtn)
+
 
         CreditsBtn.setOnClickListener(){
             Toast.makeText(this,"Credits", Toast.LENGTH_SHORT).show()
@@ -84,6 +94,15 @@ class Menu : AppCompatActivity() {
         PuntuacionsBtn.setTypeface(tf)
         jugarBtn.setTypeface(tf)
 
+        editarBtn = findViewById<Button>(R.id.editarBtn)
+        edat=findViewById(R.id.edat)
+        poblacio=findViewById(R.id.poblacio)
+        imatgePerfil=findViewById(R.id.imatgePerfil)
+        //Assignem tipus de lletra al botó
+        editarBtn.setTypeface(tf)
+        editarBtn.setOnClickListener(){
+            Toast.makeText(this,"EDITAR", Toast.LENGTH_SHORT).show()
+        }
 
     }
     private fun tancalaSessio() {
@@ -167,6 +186,17 @@ class Menu : AppCompatActivity() {
                         uid.setText(ds.child("Uid").getValue().toString())
                         correo.setText(ds.child("Email").getValue().toString())
                         nom.setText(ds.child("Nom").getValue().toString())
+                        poblacio.setText( ds.child("Poblacio").getValue().toString())
+                        edat.setText( ds.child("Edat").getValue().toString())
+
+                        var imatge: String = ds.child("Imatge").getValue().toString()
+                        Picasso.get().load(imatge).into(imatgePerfil);
+                        try {
+                            Picasso.get().load(imatge).into(imatgePerfil)
+                        } catch (e:Exception){
+                            Picasso.get().load(R.drawable.carlos).into(imatgePerfil)
+                        }
+
                     }
                     if (!trobat)
                     {
