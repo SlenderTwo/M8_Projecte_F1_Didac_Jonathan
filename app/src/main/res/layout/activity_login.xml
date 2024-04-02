@@ -16,10 +16,13 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
+            android:textColor="#000000"
             android:layout_height="wrap_content">
+
             <!-- ENTREM EL MAIL -->
             <EditText
                 android:id="@+id/correoLogin"
+                android:textColor="#000000"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textEmailAddress"
@@ -28,6 +31,8 @@
 
         <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
+            android:textColor="#000000"
+
             android:layout_height="wrap_content"
             app:passwordToggleEnabled="true">
 
@@ -37,6 +42,8 @@
             <EditText
                 android:id="@+id/passLogin"
                 android:layout_width="match_parent"
+                android:textColor="#000000"
+
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:inputType="textPassword"
@@ -49,6 +56,8 @@
             android:layout_height="wrap_content"
             android:text="@string/BtnLogin"
             android:layout_marginTop="10dp"
+            android:textColor="#000000"
+
             />
     </LinearLayout>
 </RelativeLayout>

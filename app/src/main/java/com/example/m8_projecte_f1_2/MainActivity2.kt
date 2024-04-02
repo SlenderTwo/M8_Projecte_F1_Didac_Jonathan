@@ -80,7 +80,7 @@ class QuizActivity : AppCompatActivity() {
     @SuppressLint("MissingInflatedId")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
+        setContentView(R.layout.activity_main2)
 
         // Obtener el nivel seleccionado
         nivelActual = intent.getIntExtra("NIVEL", 0)

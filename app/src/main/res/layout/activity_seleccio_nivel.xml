@@ -14,6 +14,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="32dp"
         android:text="Selecciona un nivel"
+        android:textColor="#000000"
         android:textSize="32sp" />
 
     <Button

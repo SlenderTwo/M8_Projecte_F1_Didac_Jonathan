@@ -36,6 +36,9 @@
         <activity
             android:name=".Registre"
             android:exported="false" />
+        <activity android:name=".QuizActivity"
+            android:exported="false">
+        </activity>
         <activity
             android:name=".Splash"
             android:exported="true"

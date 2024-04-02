@@ -34,13 +34,17 @@
                 android:id="@+id/BTMLOGIN"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="@string/BTMLOGIN"/>
+                android:text="@string/BTMLOGIN"
+                android:textColor="#000000"
+                />
             <!--botó de registrar-se -->
             <Button
             android:id="@+id/BTMREGISTRO"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/BTMREGISTRO"
+                android:textColor="#000000"
+
+                android:text="@string/BTMREGISTRO"
             />
         </LinearLayout>
     </RelativeLayout>

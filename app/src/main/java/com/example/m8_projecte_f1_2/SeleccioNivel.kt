@@ -9,12 +9,7 @@ class SeleccioNivel : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_seleccio_nivel)
-    }
-}
-class LevelSelectionActivity : AppCompatActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_seleccio_nivel)
+
 
         val buttonNivel1: Button = findViewById(R.id.buttonNivel1)
         val buttonNivel2: Button = findViewById(R.id.buttonNivel2)
@@ -23,7 +18,6 @@ class LevelSelectionActivity : AppCompatActivity() {
         buttonNivel1.setOnClickListener {
             val intent = Intent(this, QuizActivity::class.java)
             intent.putExtra("NIVEL", 0)
-
             startActivity(intent)
 
         }

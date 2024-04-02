@@ -35,12 +35,16 @@
             android:id="@+id/imatgePerfil"
             android:layout_width="100dp"
             android:layout_height="100dp"
+            android:textColor="#000000"
+
             android:src="@drawable/imagef1" />
         <!-- uid -->
         <TextView
             android:id="@+id/uid"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
+
             android:gravity="center"
             android:text="@string/uid" />
         <!-- correu -->
@@ -48,6 +52,8 @@
             android:id="@+id/correo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:textColor="#000000"
+
             android:gravity="center"
             android:text="@string/correo" />
 
@@ -57,6 +63,8 @@
             android:layout_height="wrap_content"
             android:id="@+id/edat"
             android:textSize="15sp"
+            android:textColor="#000000"
+
             android:text="@string/edat"
             android:gravity="center"/>
         <!-- Població -->
@@ -64,6 +72,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/poblacio"
+            android:textColor="#000000"
+
             android:textSize="15sp"
             android:text="@string/poblacio"
             android:gravity="center"/>
@@ -76,6 +86,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
+            android:textColor="#000000"
             android:text="@string/nom" />
         <!-- Boto d’Editar -->
         <Button
