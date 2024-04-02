@@ -32,8 +32,8 @@ class Login : AppCompatActivity() {
 
         BtnLogin.setOnClickListener(){
             //Abans de fer el registre validem les dades
-            var email:String = correoLogin.getText().toString()
-            var passw:String = passLogin.getText().toString()
+            val email:String = correoLogin.getText().toString()
+            val passw:String = passLogin.getText().toString()
             // validació del correu
             // si no es de tipus correu
             if (!Patterns.EMAIL_ADDRESS.matcher(email).matches()){
@@ -59,7 +59,11 @@ class Login : AppCompatActivity() {
                     val tx: String = "Benvingut "+ email
                     Toast.makeText(this, tx, Toast.LENGTH_LONG).show()
                     val user = auth.currentUser
+                    Toast.makeText(this, "NOOOOOOOOOOOOOOO ERRORRR",
+                        Toast.LENGTH_LONG).show()
                     updateUI(user)
+                    Toast.makeText(this, "ERRORRR",
+                        Toast.LENGTH_LONG).show()
                 } else {
                     Toast.makeText(this, "ERROR Autentificació",
                         Toast.LENGTH_LONG).show()
@@ -70,7 +74,7 @@ class Login : AppCompatActivity() {
     {
         val intent= Intent(this, Menu::class.java)
         startActivity(intent)
-        finish()
+        //finish()
     }
 
 }

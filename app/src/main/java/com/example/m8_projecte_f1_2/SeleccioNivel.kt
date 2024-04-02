@@ -14,6 +14,7 @@ class SeleccioNivel : AppCompatActivity() {
         val buttonNivel1: Button = findViewById(R.id.buttonNivel1)
         val buttonNivel2: Button = findViewById(R.id.buttonNivel2)
         val buttonNivel3: Button = findViewById(R.id.buttonNivel3)
+        val buttonSalir: Button = findViewById(R.id.buttonSalir)
 
         buttonNivel1.setOnClickListener {
             val intent = Intent(this, QuizActivity::class.java)
@@ -33,5 +34,10 @@ class SeleccioNivel : AppCompatActivity() {
             intent.putExtra("NIVEL", 2)
             startActivity(intent)
         }
+       buttonSalir.setOnClickListener{
+           val intent = Intent(this, Menu::class.java)
+           startActivity(intent)
+       }
     }
+
 }

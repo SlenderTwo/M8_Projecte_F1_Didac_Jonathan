@@ -79,6 +79,7 @@ class Menu : AppCompatActivity() {
         val tf = Typeface.createFromAsset(assets,"fonts/DejaVuSans.ttf")
 
         miPuntuaciotxt=findViewById(R.id.miPuntuaciotxt)
+
         puntuacio=findViewById(R.id.puntuacio)
         uid=findViewById(R.id.uid)
         correo=findViewById(R.id.correo)
@@ -133,7 +134,7 @@ class Menu : AppCompatActivity() {
         {
             val intent= Intent(this, MainActivity::class.java)
             startActivity(intent)
-            finish()
+            //finish()
         }
     }
 
@@ -165,7 +166,7 @@ class Menu : AppCompatActivity() {
         // o navegar a subnodes concrets amb child("nomdelsubnode")
         var database: FirebaseDatabase = FirebaseDatabase.getInstance("https://m8-projecte-f1-2-default-rtdb.europe-west1.firebasedatabase.app/")
         var bdreference:DatabaseReference = database.getReference("DATA BASE JUGADORS")
-
+        Toast.makeText(this, "eeeeeeeeeeeeeeeeeeeeeeeeee", Toast.LENGTH_LONG).show()
         bdreference.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.i ("pepe","arrel value"+
@@ -192,10 +193,10 @@ class Menu : AppCompatActivity() {
                         poblacio.setText( ds.child("Poblacio").getValue().toString())
                         edat.setText( ds.child("Edat").getValue().toString())
 
-                        var imatge: String = ds.child("Imatge").getValue().toString()
-                        Picasso.get().load(imatge).into(imatgePerfil);
+
                         try {
-                            Picasso.get().load(imatge).into(imatgePerfil)
+                            val imatge: String = ds.child("Imatge").getValue().toString()
+                            Picasso.get().load(imatge).into(imatgePerfil);
                         } catch (e:Exception){
                             Picasso.get().load(R.drawable.carlos).into(imatgePerfil)
                         }

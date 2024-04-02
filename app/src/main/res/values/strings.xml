@@ -29,5 +29,7 @@
     <string name="poblacio"> -- </string>
     <string name="editarBtn">Canviar Imatge</string>
 
+    <string name="exitbtn">Salir</string>
+
 
 </resources>
