@@ -70,6 +70,7 @@ class Menu : AppCompatActivity() {
         }
         jugarBtn.setOnClickListener(){
             Toast.makeText(this,"JUGAR", Toast.LENGTH_SHORT).show()
+            MainActivity2()
         }
 
         //Aquí creem un tipus de lletra a partir de una font

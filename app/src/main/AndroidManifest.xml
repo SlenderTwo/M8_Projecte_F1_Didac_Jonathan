@@ -13,6 +13,12 @@
         android:theme="@style/Theme.M8_Projecte_f1_2"
         tools:targetApi="31">
         <activity
+            android:name=".SeleccioNivel"
+            android:exported="false" />
+        <activity
+            android:name=".MainActivity2"
+            android:exported="false" />
+        <activity
             android:name=".Login"
             android:exported="false" />
         <activity

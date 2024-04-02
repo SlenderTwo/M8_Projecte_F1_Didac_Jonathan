@@ -8,7 +8,7 @@ import java.util.Timer
 import kotlin.concurrent.schedule
 
 class Splash : AppCompatActivity() {
-    private val duracio: Long=10000
+    private val duracio: Long=3000
     private lateinit var mediaPlayer: MediaPlayer
 
     override fun onCreate(savedInstanceState: Bundle?) {
