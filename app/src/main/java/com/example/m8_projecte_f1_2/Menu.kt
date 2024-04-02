@@ -70,7 +70,9 @@ class Menu : AppCompatActivity() {
         }
         jugarBtn.setOnClickListener(){
             Toast.makeText(this,"JUGAR", Toast.LENGTH_SHORT).show()
-            MainActivity2()
+            val intent= Intent(this, Quiz::class.java)
+            startActivity(intent)
+            finish()
         }
 
         //Aquí creem un tipus de lletra a partir de una font
