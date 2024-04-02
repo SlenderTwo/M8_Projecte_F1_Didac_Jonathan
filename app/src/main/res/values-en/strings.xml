@@ -1,0 +1,33 @@
+<resources>
+    <string name="app_name">M8_Projecte_f1_2</string>
+    <string name="BTMLOGIN">Login</string>
+    <string name="BTMREGISTRO">Registry</string>
+    <string name="correoEt">E-mail</string>
+    <string name="nombreEt">Name</string>
+    <string name="passEt">Password</string>
+    <string name="fechaTxt">Date</string>
+    <string name="Registrar">REGISTER</string>
+    <string name="correoLogin">E-mail</string>
+    <string name="passLogin">Password</string>
+    <string name="BtnLogin">GET IN</string>
+    <string name="TancarSessio">Close Session</string>
+
+    <string name="tancarSessio">Close Session</string>
+    <string name="miPuntuaciotxt">Score</string>
+    <string name="puntuacio"> -- </string>
+    <string name="uid"> -- </string>
+    <string name="correo"> -- </string>
+    <string name="nom"> -- </string>
+    <string name="MenuTxt">MENU</string>
+    <string name="jugarBtn">PLAY</string>
+    <string name="PuntuacionsBtn">Scores</string>
+    <string name="CreditsBtn">Credits</string>
+
+    <string name="edatEt">Age</string>
+    <string name="poblacioEt">Populationó</string>
+    <string name="edat"> -- </string>
+    <string name="poblacio"> -- </string>
+    <string name="editarBtn">Change Image</string>
+
+
+</resources>
