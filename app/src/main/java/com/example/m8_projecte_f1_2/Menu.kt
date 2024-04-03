@@ -4,7 +4,9 @@ import android.app.AlertDialog
 import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Typeface
+import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -23,7 +25,10 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
+import java.io.ByteArrayOutputStream
 
 class Menu : AppCompatActivity() {
     //creem unes variables per comprovar ususari i authentificació
@@ -53,6 +58,9 @@ class Menu : AppCompatActivity() {
     var user: FirebaseUser? = null;
 
     lateinit var imatgeUri: Uri
+
+    // Variables per a gravar a Storage
+    lateinit var storageReference: StorageReference
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -120,6 +128,9 @@ class Menu : AppCompatActivity() {
             Toast.makeText(this, "EDITAR", Toast.LENGTH_SHORT).show()
             canviaLaImatge()
         }
+
+        //Inicialitza el StorageReference
+        storageReference = FirebaseStorage.getInstance().getReference()
 
     }
 
@@ -316,9 +327,7 @@ class Menu : AppCompatActivity() {
         // https://www.codevscolor.com/android-kotlin-list-alert-dialog
         //Veiem com es crea un de dues opcions (habitualment acceptar o cancel·lar:
         val dialog = AlertDialog.Builder(this)
-            .setTitle("CANVIAR IMATGE")
-            .setMessage("Seleccionar imatge de: ")
-            .setNegativeButton("Galeria") { view, _ ->
+            .setTitle("CANVIAR IMATGE").setMessage("Seleccionar imatge de: ").setNegativeButton("Galeria") { view, _ ->
                 Toast.makeText(this, "De galeria", Toast.LENGTH_SHORT).show()
                 //mirem primer si tenim permisos per a accedir a Read External Storage
                 if (askForPermissions()) {
@@ -332,17 +341,12 @@ class Menu : AppCompatActivity() {
                     startActivityForResult(intent, REQUEST_CODE)
 
                 } else {
-                    Toast.makeText(
-                        this, "ERROR PERMISOS",
-                        Toast.LENGTH_SHORT
-                    ).show()
+                    Toast.makeText(this, "ERROR PERMISOS", Toast.LENGTH_SHORT).show()
                 }
             }
             .setPositiveButton("Càmera") { view, _ ->
                 Toast.makeText(
-                    this, "A IMPLEMENTAR PELS ALUMNES",
-                    Toast.LENGTH_LONG
-                ).show()
+                    this, "A IMPLEMENTAR PELS ALUMNES", Toast.LENGTH_LONG).show()
                 view.dismiss()
             }
             .setCancelable(false)
@@ -356,9 +360,37 @@ class Menu : AppCompatActivity() {
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             imatgeUri = data?.data!!
             imatgePerfil.setImageURI(imatgeUri)
+            pujarFoto(imatgeUri)
+
         } else {
             Toast.makeText(
                 this, "Error recuperant imatge de galeria", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun pujarFoto(imatgeUri: Uri) {
+        var folderReference: StorageReference = storageReference.child("FotosPerfil")
+        var Uids: String = uid.getText().toString()
+        //Podriem fer:
+        //folderReference.child(Uids).putFile(imatgeUri)
+        //Pero utilitzem el mètode recomanat a la documentació
+        // https://firebase.google.com/docs/storage/android/uploadfiles
+        // Get the data from an ImageView as bytes
+        imatgePerfil.isDrawingCacheEnabled = true
+        imatgePerfil.buildDrawingCache()
+        val bitmap = (imatgePerfil.drawable as BitmapDrawable).bitmap
+        val baos = ByteArrayOutputStream()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+        val data = baos.toByteArray()
+        var uploadTask = folderReference.child(Uids).putBytes(data)
+
+        uploadTask.addOnFailureListener {
+            // Handle unsuccessful uploads
+            Toast.makeText(
+                this, "Error enviant imatge a Storage", Toast.LENGTH_SHORT).show()
+        }.addOnSuccessListener { taskSnapshot ->
+            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+            // ...
         }
     }
 }
