@@ -88,7 +88,7 @@ class Menu : AppCompatActivity() {
         //Aquí creem un tipus de lletra a partir de una font
         val tf = Typeface.createFromAsset(assets, "fonts/DejaVuSans.ttf")
 
-       // miPuntuaciotxt = findViewById(R.id.miPuntuaciotxt)
+        miPuntuaciotxt = findViewById(R.id.miPuntuaciotxt)
 
         puntuacio = findViewById(R.id.puntuacio)
         uid = findViewById(R.id.uid)
