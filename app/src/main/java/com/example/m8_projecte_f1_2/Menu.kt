@@ -301,21 +301,14 @@ class Menu : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle("Permission Denied")
             .setMessage("Permission is denied, Please allow permissions from App Settings.")
-            .setPositiveButton("App Settings",
-                DialogInterface.OnClickListener { dialogInterface, i ->
+            .setPositiveButton("App Settings", DialogInterface.OnClickListener { dialogInterface, i ->
                     // send to app settings if permission is denied permanently
                     val intent = Intent()
-                    intent.action =
-                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                    val uri = Uri.fromParts(
-                        "package",
-                        getPackageName(), null
-                    )
+                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    val uri = Uri.fromParts("package", getPackageName(), null)
                     intent.data = uri
                     startActivity(intent)
-                })
-            .setNegativeButton("Cancel", null)
-            .show()
+                }).setNegativeButton("Cancel", null).show()
     }
 //---------------------------------------------------------------
 
