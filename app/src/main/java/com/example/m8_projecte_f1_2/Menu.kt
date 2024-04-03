@@ -52,45 +52,48 @@ class Menu : AppCompatActivity() {
 
     var user: FirebaseUser? = null;
 
+    lateinit var imatgeUri: Uri
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_menu)
 
-        auth= FirebaseAuth.getInstance()
-        user =auth.currentUser
-        tancarSessio =findViewById<Button>(R.id.tancarSessio)
-        tancarSessio.setOnClickListener(){
+        auth = FirebaseAuth.getInstance()
+        user = auth.currentUser
+        tancarSessio = findViewById<Button>(R.id.tancarSessio)
+        tancarSessio.setOnClickListener() {
             tancalaSessio()
         }
 
-        tancarSessio =findViewById<Button>(R.id.tancarSessio)
-        CreditsBtn =findViewById<Button>(R.id.CreditsBtn)
-        PuntuacionsBtn =findViewById<Button>(R.id.PuntuacionsBtn)
-        jugarBtn =findViewById<Button>(R.id.jugarBtn)
+        tancarSessio = findViewById<Button>(R.id.tancarSessio)
+        CreditsBtn = findViewById<Button>(R.id.CreditsBtn)
+        PuntuacionsBtn = findViewById<Button>(R.id.PuntuacionsBtn)
+        jugarBtn = findViewById<Button>(R.id.jugarBtn)
 
 
-        CreditsBtn.setOnClickListener(){
-            Toast.makeText(this,"Credits", Toast.LENGTH_SHORT).show()
+        CreditsBtn.setOnClickListener() {
+            Toast.makeText(this, "Credits", Toast.LENGTH_SHORT).show()
         }
-        PuntuacionsBtn.setOnClickListener(){
-            Toast.makeText(this,"Puntuacions", Toast.LENGTH_SHORT).show()
+        PuntuacionsBtn.setOnClickListener() {
+            Toast.makeText(this, "Puntuacions", Toast.LENGTH_SHORT).show()
         }
-        jugarBtn.setOnClickListener(){
-            Toast.makeText(this,"JUGAR", Toast.LENGTH_SHORT).show()
-            val intent= Intent(this, SeleccioNivel::class.java)
+        jugarBtn.setOnClickListener() {
+            Toast.makeText(this, "JUGAR", Toast.LENGTH_SHORT).show()
+            val intent = Intent(this, SeleccioNivel::class.java)
             startActivity(intent)
             //finish()
         }
 
         //Aquí creem un tipus de lletra a partir de una font
-        val tf = Typeface.createFromAsset(assets,"fonts/DejaVuSans.ttf")
+        val tf = Typeface.createFromAsset(assets, "fonts/DejaVuSans.ttf")
 
-        miPuntuaciotxt=findViewById(R.id.miPuntuaciotxt)
+       // miPuntuaciotxt = findViewById(R.id.miPuntuaciotxt)
 
-        puntuacio=findViewById(R.id.puntuacio)
-        uid=findViewById(R.id.uid)
-        correo=findViewById(R.id.correo)
-        nom=findViewById(R.id.nom)
+        puntuacio = findViewById(R.id.puntuacio)
+        uid = findViewById(R.id.uid)
+        correo = findViewById(R.id.correo)
+        nom = findViewById(R.id.nom)
 
         //els hi assignem el tipus de lletra
         miPuntuaciotxt.setTypeface(tf)
@@ -108,9 +111,9 @@ class Menu : AppCompatActivity() {
         editarBtn = findViewById<Button>(R.id.editarBtn)
 
 
-        edat=findViewById(R.id.edat)
-        poblacio=findViewById(R.id.poblacio)
-        imatgePerfil=findViewById(R.id.imatgePerfil)
+        edat = findViewById(R.id.edat)
+        poblacio = findViewById(R.id.poblacio)
+        imatgePerfil = findViewById(R.id.imatgePerfil)
         //Assignem tipus de lletra al botó
         editarBtn.setTypeface(tf)
         editarBtn.setOnClickListener() {
@@ -119,10 +122,11 @@ class Menu : AppCompatActivity() {
         }
 
     }
+
     private fun tancalaSessio() {
         auth.signOut() //tanca la sessió
         //va a la pantalla inicial
-        val intent= Intent(this, MainActivity::class.java)
+        val intent = Intent(this, MainActivity::class.java)
         startActivity(intent)
         finish()
     }
@@ -132,25 +136,24 @@ class Menu : AppCompatActivity() {
         usuariLogejat()
         super.onStart()
     }
-    private fun  usuariLogejat()
-    {
-        if (user !=null)
-        {
-            Toast.makeText(this,"Jugador logejat",
-                Toast.LENGTH_SHORT).show()
+
+    private fun usuariLogejat() {
+        if (user != null) {
+            Toast.makeText(
+                this, "Jugador logejat",
+                Toast.LENGTH_SHORT
+            ).show()
             consulta()
-        }
-        else
-        {
-            val intent= Intent(this, MainActivity::class.java)
+        } else {
+            val intent = Intent(this, MainActivity::class.java)
             startActivity(intent)
             //finish()
         }
     }
 
-    private fun consulta(){
+    private fun consulta() {
         //Amb Firebase no fem consultes realment, el que fem en connectar-nos a una referencia
-                // i aquesta anirà canviant automàticament quan canvii la base de dades
+        // i aquesta anirà canviant automàticament quan canvii la base de dades
         // reference apunta a "DATA BASE JUGADORS"
         // sempre es crea un referencia a un punt del arbre de la base de dades
         // Per exemple si tenim la base de dades
@@ -169,85 +172,107 @@ class Menu : AppCompatActivity() {
         // onDataChange (es crida si s'actualitza les dades o és la primera vegada que ens suscribim)
         // onCancelled Es crida si hi ha un error o es cancel·la la lectura
         // al primer métode rebrem un objecte json que és la branca sobre la que demanem actualització
-                // getkey retorna la clave del objecte
-                // getValue retorna el valor
-                // els subnodes (fills) es recuperen amb getChildren
-                // es poden llegir com un llistat d'objectes Datasnapshots
+        // getkey retorna la clave del objecte
+        // getValue retorna el valor
+        // els subnodes (fills) es recuperen amb getChildren
+        // es poden llegir com un llistat d'objectes Datasnapshots
         // o navegar a subnodes concrets amb child("nomdelsubnode")
-        var database: FirebaseDatabase = FirebaseDatabase.getInstance("https://m8-projecte-f1-2-default-rtdb.europe-west1.firebasedatabase.app/")
-        var bdreference:DatabaseReference = database.getReference("DATA BASE JUGADORS")
-        bdreference.addValueEventListener(object: ValueEventListener {
+        var database: FirebaseDatabase =
+            FirebaseDatabase.getInstance("https://m8-projecte-f1-2-default-rtdb.europe-west1.firebasedatabase.app/")
+        var bdreference: DatabaseReference = database.getReference("DATA BASE JUGADORS")
+        bdreference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.i ("pepe","arrel value"+
-                        snapshot.getValue().toString())
-                Log.i ("pepe","arrel key"+ snapshot.key.toString())
+                Log.i(
+                    "pepe", "arrel value" +
+                            snapshot.getValue().toString()
+                )
+                Log.i("pepe", "arrel key" + snapshot.key.toString())
                 // ara capturem tots els fills
-                var trobat:Boolean = false
+                var trobat: Boolean = false
                 for (ds in snapshot.getChildren()) {
-                    Log.i ("pepe","DS key:"+ds.child("Uid").key.toString())
-                    Log.i ("pepe","DS value:"+ds.child("Uid").getValue().toString())
-                    Log.i ("pepe","DS data:"+ds.child("Data").getValue().toString())
-                    Log.i ("pepe","DS mail:"+ds.child("Email").getValue().toString())
+                    Log.i("pepe", "DS key:" + ds.child("Uid").key.toString())
+                    Log.i("pepe", "DS value:" + ds.child("Uid").getValue().toString())
+                    Log.i("pepe", "DS data:" + ds.child("Data").getValue().toString())
+                    Log.i("pepe", "DS mail:" + ds.child("Email").getValue().toString())
                     //mirem si el mail és el mateix que el del jugador
                     //si és així, mostrem les dades als textview corresponents
 
-                    if (ds.child("Email").getValue().toString().equals(user?.email)){
-                        trobat=true
+                    if (ds.child("Email").getValue().toString().equals(user?.email)) {
+                        trobat = true
 
                         //carrega els textview
                         puntuacio.setText(ds.child("Puntuacio").getValue().toString())
                         uid.setText(ds.child("Uid").getValue().toString())
                         correo.setText(ds.child("Email").getValue().toString())
                         nom.setText(ds.child("Nom").getValue().toString())
-                        poblacio.setText( ds.child("Poblacio").getValue().toString())
-                        edat.setText( ds.child("Edat").getValue().toString())
+                        poblacio.setText(ds.child("Poblacio").getValue().toString())
+                        edat.setText(ds.child("Edat").getValue().toString())
 
 
                         try {
                             val imatge: String = ds.child("Imatge").getValue().toString()
                             Picasso.get().load(imatge).into(imatgePerfil);
-                        } catch (e:Exception){
+                        } catch (e: Exception) {
                             Picasso.get().load(R.drawable.carlos).into(imatgePerfil)
                         }
 
                     }
-                    if (!trobat)
-                    {
-                    Log.e ("ERROR","ERROR NO TROBAT MAIL")
+                    if (!trobat) {
+                        Log.e("ERROR", "ERROR NO TROBAT MAIL")
                     }
                 }
 
             }
+
             override fun onCancelled(error: DatabaseError) {
-                Log.e ("ERROR","ERROR DATABASE CANCEL")
+                Log.e("ERROR", "ERROR DATABASE CANCEL")
             }
         })
     }
+
     //----------------------------------------Permisos----------------
     fun isPermissionsAllowed(): Boolean {
-        return if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+        return if (ContextCompat.checkSelfPermission(
+                this,
+                android.Manifest.permission.READ_EXTERNAL_STORAGE
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
             false
         } else true
     }
+
     fun askForPermissions(): Boolean {
-        val REQUEST_CODE=201
+        val REQUEST_CODE = 201
         if (!isPermissionsAllowed()) {
             if
-                    (ActivityCompat.shouldShowRequestPermissionRationale(this ,android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    (ActivityCompat.shouldShowRequestPermissionRationale(
+                    this,
+                    android.Manifest.permission.READ_EXTERNAL_STORAGE
+                )
+            ) {
                 showPermissionDeniedDialog()
             } else {
-                ActivityCompat.requestPermissions(this
-                    ,arrayOf(android.
-                    Manifest.permission.READ_EXTERNAL_STORAGE),REQUEST_CODE)
+                ActivityCompat.requestPermissions(
+                    this, arrayOf(
+                        android.Manifest.permission.READ_EXTERNAL_STORAGE
+                    ), REQUEST_CODE
+                )
             }
             return false
         }
         return true
     }
-    override fun onRequestPermissionsResult(requestCode: Int,permissions: Array<String>,grantResults: IntArray) {
-        super.onRequestPermissionsResult(requestCode, permissions,
-            grantResults)
-        val REQUEST_CODE=201
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(
+            requestCode, permissions,
+            grantResults
+        )
+        val REQUEST_CODE = 201
         when (requestCode) {
             REQUEST_CODE -> {
                 if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
@@ -260,29 +285,32 @@ class Menu : AppCompatActivity() {
             }
         }
     }
+
     private fun showPermissionDeniedDialog() {
         AlertDialog.Builder(this)
             .setTitle("Permission Denied")
             .setMessage("Permission is denied, Please allow permissions from App Settings.")
-                .setPositiveButton("App Settings",
-                    DialogInterface.OnClickListener { dialogInterface, i ->
-                        // send to app settings if permission is denied permanently
-                        val intent = Intent()
-                        intent.action =
-                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                        val uri = Uri.fromParts("package",
-                            getPackageName(), null)
-                        intent.data = uri
-                        startActivity(intent)
-                    })
-                .setNegativeButton("Cancel",null)
-                .show()
+            .setPositiveButton("App Settings",
+                DialogInterface.OnClickListener { dialogInterface, i ->
+                    // send to app settings if permission is denied permanently
+                    val intent = Intent()
+                    intent.action =
+                        Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                    val uri = Uri.fromParts(
+                        "package",
+                        getPackageName(), null
+                    )
+                    intent.data = uri
+                    startActivity(intent)
+                })
+            .setNegativeButton("Cancel", null)
+            .show()
     }
 //---------------------------------------------------------------
 
     private fun canviaLaImatge() {
         //utilitzarem un alertdialog que seleccionara de galeria o agafar una foto
-                // Si volem fer un AlertDialog amb més de dos elements (amb una llista),
+        // Si volem fer un AlertDialog amb més de dos elements (amb una llista),
         // Aixó ho fariem amb fragments (que veurem més endevant)
         // Aquí hi ha un tutorial per veure com es fa:
         // https://www.codevscolor.com/android-kotlin-list-alert-dialog
@@ -293,30 +321,44 @@ class Menu : AppCompatActivity() {
             .setNegativeButton("Galeria") { view, _ ->
                 Toast.makeText(this, "De galeria", Toast.LENGTH_SHORT).show()
                 //mirem primer si tenim permisos per a accedir a Read External Storage
-                        if (askForPermissions()) {
-                                // Permissions are already granted, do your stuff
-                                // Ara agafarem una imatge de la galeria
-                                val intent = Intent(Intent.ACTION_PICK)
-                                val REQUEST_CODE=201 //Aquest codi és un número que faremservir per
-                                        127
-                                // a identificar el que hem recuperat del intent
-                                        // pot ser qualsevol número
-                                        intent.type = "image/*"
-                            startActivityForResult(intent, REQUEST_CODE)
+                if (askForPermissions()) {
+                    // Permissions are already granted, do your stuff
+                    // Ara agafarem una imatge de la galeria
+                    val intent = Intent(Intent.ACTION_PICK)
+                    val REQUEST_CODE = 201 //Aquest codi és un número que faremservir per
+                    // a identificar el que hem recuperat del intent
+                    // pot ser qualsevol número
+                    intent.type = "image/*"
+                    startActivityForResult(intent, REQUEST_CODE)
 
-                        }
-                        else{
-                            Toast.makeText(this, "ERROR PERMISOS",
-                                Toast.LENGTH_SHORT).show()
-                        }
+                } else {
+                    Toast.makeText(
+                        this, "ERROR PERMISOS",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
             }
             .setPositiveButton("Càmera") { view, _ ->
-                Toast.makeText(this, "A IMPLEMENTAR PELS ALUMNES",
-                    Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this, "A IMPLEMENTAR PELS ALUMNES",
+                    Toast.LENGTH_LONG
+                ).show()
                 view.dismiss()
             }
             .setCancelable(false)
             .create()
         dialog.show()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val REQUEST_CODE = 201
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            imatgeUri = data?.data!!
+            imatgePerfil.setImageURI(imatgeUri)
+        } else {
+            Toast.makeText(
+                this, "Error recuperant imatge de galeria", Toast.LENGTH_SHORT).show()
+        }
     }
 }
