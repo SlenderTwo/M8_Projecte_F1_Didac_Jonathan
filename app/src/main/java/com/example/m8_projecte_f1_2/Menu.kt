@@ -1,14 +1,21 @@
 package com.example.m8_projecte_f1_2
 
+import android.app.AlertDialog
+import android.content.DialogInterface
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.graphics.Typeface
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.Settings
 import android.util.Log
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
@@ -99,13 +106,16 @@ class Menu : AppCompatActivity() {
         jugarBtn.setTypeface(tf)
 
         editarBtn = findViewById<Button>(R.id.editarBtn)
+
+
         edat=findViewById(R.id.edat)
         poblacio=findViewById(R.id.poblacio)
         imatgePerfil=findViewById(R.id.imatgePerfil)
         //Assignem tipus de lletra al botó
         editarBtn.setTypeface(tf)
-        editarBtn.setOnClickListener(){
-            Toast.makeText(this,"EDITAR", Toast.LENGTH_SHORT).show()
+        editarBtn.setOnClickListener() {
+            Toast.makeText(this, "EDITAR", Toast.LENGTH_SHORT).show()
+            canviaLaImatge()
         }
 
     }
@@ -214,4 +224,94 @@ class Menu : AppCompatActivity() {
             }
         })
     }
+    //----------------------------------------Permisos----------------
+    fun isPermissionsAllowed(): Boolean {
+        return if
+                       (ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+            false
+        } else true
+    }
+    fun askForPermissions(): Boolean {
+        val REQUEST_CODE=201
+        if (!isPermissionsAllowed()) {
+            if
+                    (ActivityCompat.shouldShowRequestPermissionRationale(this ,android.Manifest.permission.READ_MEDIA_IMAGES)) {
+                showPermissionDeniedDialog()
+            } else {
+                ActivityCompat.requestPermissions(this
+                    ,arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES),REQUEST_CODE)
+            }
+            return false
+        }
+        return true
+    }
+    override fun onRequestPermissionsResult(requestCode:
+                                            Int,permissions: Array<String>,grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions,
+            grantResults)
+        val REQUEST_CODE=201
+        when (requestCode) {
+            REQUEST_CODE -> {
+                if (grantResults.size > 0 && grantResults[0] ==
+                    PackageManager.PERMISSION_GRANTED) {
+                    // permission is granted, you can perform your operation here
+                } else {
+                    // permission is denied, you can ask for permission again, if you want
+                    // askForPermissions()
+                }
+                return
+            }
+        }
+    }
+    private fun showPermissionDeniedDialog() {
+        AlertDialog.Builder(this)
+            .setTitle("Permission Denied")
+            .setMessage("Permission is denied, Please allow permissions from App Settings.")
+                .setPositiveButton("App Settings", DialogInterface.OnClickListener { dialogInterface, i ->
+                        // send to app settings if permission is denied permanently
+                        val intent = Intent()
+                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        val uri = Uri.fromParts("package",
+                            getPackageName(), null)
+                        intent.data = uri
+                        startActivity(intent)
+                    })
+                .setNegativeButton("Cancel",null)
+                .show()
+    }
+//----------------------------------------------------------------
+
+    private fun canviaLaImatge() {
+        //utilitzarem un alertdialog que seleccionara de galeria o agafar una foto
+                // Si volem fer un AlertDialog amb més de dos elements (amb una llista),
+        // Aixó ho fariem amb fragments (que veurem més endevant)
+        // Aquí hi ha un tutorial per veure com es fa:
+        // https://www.codevscolor.com/android-kotlin-list-alert-dialog
+        //Veiem com es crea un de dues opcions (habitualment acceptar o cancel·lar:
+        val dialog = AlertDialog.Builder(this)
+            .setTitle("CANVIAR IMATGE")
+            .setMessage("Seleccionar imatge de: ")
+            .setNegativeButton("Galeria") { view, _ ->
+                Toast.makeText(this, "De galeria",
+                    Toast.LENGTH_SHORT).show()
+                //mirem primer si tenim permisos per a accedir a Read External Storage
+                        if (askForPermissions()) {
+                            // Permissions are already granted, do your stuff
+                            // Aquí agafarem de la galeria la foto que ens calgui
+                        }
+                        else{
+                            Toast.makeText(this, "ERROR PERMISOS",
+                                Toast.LENGTH_SHORT).show()
+                        }
+            }
+            .setPositiveButton("Càmera") { view, _ ->
+                Toast.makeText(this, "A IMPLEMENTAR PELS ALUMNES",
+                    Toast.LENGTH_LONG).show()
+                view.dismiss()
+            }
+            .setCancelable(false)
+            .create()
+        dialog.show()
+    }
+
 }
