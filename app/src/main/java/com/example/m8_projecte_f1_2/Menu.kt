@@ -176,7 +176,6 @@ class Menu : AppCompatActivity() {
         // o navegar a subnodes concrets amb child("nomdelsubnode")
         var database: FirebaseDatabase = FirebaseDatabase.getInstance("https://m8-projecte-f1-2-default-rtdb.europe-west1.firebasedatabase.app/")
         var bdreference:DatabaseReference = database.getReference("DATA BASE JUGADORS")
-        Toast.makeText(this, "eeeeeeeeeeeeeeeeeeeeeeeeee", Toast.LENGTH_LONG).show()
         bdreference.addValueEventListener(object: ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 Log.i ("pepe","arrel value"+
@@ -226,8 +225,7 @@ class Menu : AppCompatActivity() {
     }
     //----------------------------------------Permisos----------------
     fun isPermissionsAllowed(): Boolean {
-        return if
-                       (ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_MEDIA_IMAGES) != PackageManager.PERMISSION_GRANTED) {
+        return if (ContextCompat.checkSelfPermission(this,android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             false
         } else true
     }
@@ -235,25 +233,24 @@ class Menu : AppCompatActivity() {
         val REQUEST_CODE=201
         if (!isPermissionsAllowed()) {
             if
-                    (ActivityCompat.shouldShowRequestPermissionRationale(this ,android.Manifest.permission.READ_MEDIA_IMAGES)) {
+                    (ActivityCompat.shouldShowRequestPermissionRationale(this ,android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 showPermissionDeniedDialog()
             } else {
                 ActivityCompat.requestPermissions(this
-                    ,arrayOf(android.Manifest.permission.READ_MEDIA_IMAGES),REQUEST_CODE)
+                    ,arrayOf(android.
+                    Manifest.permission.READ_EXTERNAL_STORAGE),REQUEST_CODE)
             }
             return false
         }
         return true
     }
-    override fun onRequestPermissionsResult(requestCode:
-                                            Int,permissions: Array<String>,grantResults: IntArray) {
+    override fun onRequestPermissionsResult(requestCode: Int,permissions: Array<String>,grantResults: IntArray) {
         super.onRequestPermissionsResult(requestCode, permissions,
             grantResults)
         val REQUEST_CODE=201
         when (requestCode) {
             REQUEST_CODE -> {
-                if (grantResults.size > 0 && grantResults[0] ==
-                    PackageManager.PERMISSION_GRANTED) {
+                if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                     // permission is granted, you can perform your operation here
                 } else {
                     // permission is denied, you can ask for permission again, if you want
@@ -267,10 +264,12 @@ class Menu : AppCompatActivity() {
         AlertDialog.Builder(this)
             .setTitle("Permission Denied")
             .setMessage("Permission is denied, Please allow permissions from App Settings.")
-                .setPositiveButton("App Settings", DialogInterface.OnClickListener { dialogInterface, i ->
+                .setPositiveButton("App Settings",
+                    DialogInterface.OnClickListener { dialogInterface, i ->
                         // send to app settings if permission is denied permanently
                         val intent = Intent()
-                        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                        intent.action =
+                            Settings.ACTION_APPLICATION_DETAILS_SETTINGS
                         val uri = Uri.fromParts("package",
                             getPackageName(), null)
                         intent.data = uri
@@ -279,7 +278,7 @@ class Menu : AppCompatActivity() {
                 .setNegativeButton("Cancel",null)
                 .show()
     }
-//----------------------------------------------------------------
+//---------------------------------------------------------------
 
     private fun canviaLaImatge() {
         //utilitzarem un alertdialog que seleccionara de galeria o agafar una foto
@@ -292,12 +291,19 @@ class Menu : AppCompatActivity() {
             .setTitle("CANVIAR IMATGE")
             .setMessage("Seleccionar imatge de: ")
             .setNegativeButton("Galeria") { view, _ ->
-                Toast.makeText(this, "De galeria",
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "De galeria", Toast.LENGTH_SHORT).show()
                 //mirem primer si tenim permisos per a accedir a Read External Storage
                         if (askForPermissions()) {
-                            // Permissions are already granted, do your stuff
-                            // Aquí agafarem de la galeria la foto que ens calgui
+                                // Permissions are already granted, do your stuff
+                                // Ara agafarem una imatge de la galeria
+                                val intent = Intent(Intent.ACTION_PICK)
+                                val REQUEST_CODE=201 //Aquest codi és un número que faremservir per
+                                        127
+                                // a identificar el que hem recuperat del intent
+                                        // pot ser qualsevol número
+                                        intent.type = "image/*"
+                            startActivityForResult(intent, REQUEST_CODE)
+
                         }
                         else{
                             Toast.makeText(this, "ERROR PERMISOS",
@@ -313,5 +319,4 @@ class Menu : AppCompatActivity() {
             .create()
         dialog.show()
     }
-
 }
