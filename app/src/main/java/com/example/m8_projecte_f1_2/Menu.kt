@@ -29,6 +29,9 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
+import android.graphics.BitmapFactory
+import android.provider.MediaStore
+
 
 class Menu : AppCompatActivity() {
     //creem unes variables per comprovar ususari i authentificació
@@ -362,7 +365,7 @@ class Menu : AppCompatActivity() {
         }
     }*/
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val REQUEST_CODE = 201
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
@@ -370,6 +373,8 @@ class Menu : AppCompatActivity() {
             imatgeUri = data?.data!!
             imatgePerfil.setImageURI(imatgeUri)
             pujarFoto(imatgeUri)
+            Log.d("PUJAR_FOTO", "URI de la imagen: $imatgeUri")
+
             Toast.makeText(this, "Imagen seleccionada de la galería", Toast.LENGTH_SHORT).show()
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             // Resultado de la captura de imagen de la cámara
@@ -383,10 +388,52 @@ class Menu : AppCompatActivity() {
         } else {
             Toast.makeText(this, "Error al obtener la imagen", Toast.LENGTH_SHORT).show()
         }
+    }*/
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val REQUEST_CODE = 201
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            // Resultado de la galería
+            imatgeUri = data?.data!!
+            imatgePerfil.setImageURI(imatgeUri)
+            pujarFoto(imatgeUri)
+            Log.d("PUJAR_FOTO", "URI de la imagen: $imatgeUri")
+
+            Toast.makeText(this, "Imagen seleccionada de la galería", Toast.LENGTH_SHORT).show()
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            // Resultado de la captura de imagen de la cámara
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            // Ahora puedes hacer lo que quieras con la imagen capturada
+            // Por ejemplo, puedes establecerla en un ImageView
+            imatgePerfil.setImageBitmap(imageBitmap)
+            // También puedes guardarla en almacenamiento o subirla a Firebase Storage
+            // según tus necesidades
+            // Convertir la imagen a URI para subirla
+            val imageUri = getImageUri(imageBitmap)
+            pujarFoto(imageUri)
+            Toast.makeText(this, "Imagen capturada desde la cámara", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Error al obtener la imagen", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun getImageUri(inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path: String = MediaStore.Images.Media.insertImage(
+            contentResolver,
+            inImage,
+            "Title",
+            null
+        )
+        return Uri.parse(path)
     }
 
 
-    private fun pujarFoto(imatgeUri: Uri) {
+
+
+
+   /* private fun pujarFoto(imatgeUri: Uri) {
         var folderReference: StorageReference = storageReference.child("FotosPerfil")
         var Uids: String = uid.getText().toString()
         //Podriem fer:
@@ -410,5 +457,32 @@ class Menu : AppCompatActivity() {
             // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
             // ...
         }
+    }*/
+
+    private fun pujarFoto(imatgeUri: Uri) {
+        var folderReference: StorageReference = storageReference.child("FotosPerfil")
+        var Uids: String = uid.getText().toString()
+        // Subir la imagen al Firestore
+        folderReference.child(Uids).putFile(imatgeUri)
+            .addOnSuccessListener { taskSnapshot ->
+                // Si se sube correctamente, puedes obtener la URL de descarga
+                val downloadUrl = taskSnapshot.storage.downloadUrl.toString()
+                // Luego puedes guardar esta URL en Firestore o donde lo necesites
+                // Por ejemplo, si deseas guardarla en Firestore:
+                val database = FirebaseDatabase.getInstance()
+                val bdreference = database.getReference("DATA BASE JUGADORS")
+                bdreference.child(Uids).child("Imatge").setValue(downloadUrl)
+            }
+            .addOnFailureListener { exception ->
+                // Manejar errores
+                Toast.makeText(
+                    this, "Error enviando imagen a Storage: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
     }
+
+
+
+
 }
