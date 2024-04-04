@@ -82,8 +82,7 @@ class Registre : AppCompatActivity() {
 
                 if (task.isSuccessful) {
                     // Sign in success, update UI with the signed-in user's information
-                    Toast.makeText(
-                        this,"createUserWithEmail:success",Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this,"createUserWithEmail:success",Toast.LENGTH_SHORT).show()
                     val user = auth.currentUser
                     updateUI(user)
                 } else {
@@ -131,8 +130,7 @@ class Registre : AppCompatActivity() {
             if(reference!=null) {
                 //crea un fill amb els valors de dadesJugador
                 reference.child(uidString).setValue(dadesJugador)
-                Toast.makeText(this, "USUARI BEN REGISTRAT",
-                    Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "USUARI BEN REGISTRAT", Toast.LENGTH_SHORT).show()
                 val intent= Intent(this,Menu::class.java)
                 startActivity(intent)
             }

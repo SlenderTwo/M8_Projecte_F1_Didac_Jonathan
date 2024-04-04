@@ -59,14 +59,11 @@ class Login : AppCompatActivity() {
                     val tx: String = "Benvingut "+ email
                     Toast.makeText(this, tx, Toast.LENGTH_LONG).show()
                     val user = auth.currentUser
-                    Toast.makeText(this, "NOOOOOOOOOOOOOOO ERRORRR",
-                        Toast.LENGTH_LONG).show()
+                    //Toast.makeText(this, "NOOOOOOOOOOOOOOO ERRORRR", Toast.LENGTH_LONG).show()
                     updateUI(user)
-                    Toast.makeText(this, "ERRORRR",
-                        Toast.LENGTH_LONG).show()
+                    //Toast.makeText(this, "ERRORRR", Toast.LENGTH_LONG).show()
                 } else {
-                    Toast.makeText(this, "ERROR Autentificació",
-                        Toast.LENGTH_LONG).show()
+                    Toast.makeText(this, "ERROR Autentificació", Toast.LENGTH_LONG).show()
                 }
             }
     }

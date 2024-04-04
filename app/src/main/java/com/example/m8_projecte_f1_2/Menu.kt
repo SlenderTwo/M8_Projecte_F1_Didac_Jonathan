@@ -62,6 +62,11 @@ class Menu : AppCompatActivity() {
     // Variables per a gravar a Storage
     lateinit var storageReference: StorageReference
 
+    companion object {
+        private const val REQUEST_IMAGE_CAPTURE = 1
+    }
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -243,11 +248,7 @@ class Menu : AppCompatActivity() {
 
     //----------------------------------------Permisos----------------
     fun isPermissionsAllowed(): Boolean {
-        return if (ContextCompat.checkSelfPermission(
-                this,
-                android.Manifest.permission.READ_EXTERNAL_STORAGE
-            ) != PackageManager.PERMISSION_GRANTED
-        ) {
+        return if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             false
         } else true
     }
@@ -255,19 +256,10 @@ class Menu : AppCompatActivity() {
     fun askForPermissions(): Boolean {
         val REQUEST_CODE = 201
         if (!isPermissionsAllowed()) {
-            if
-                    (ActivityCompat.shouldShowRequestPermissionRationale(
-                    this,
-                    android.Manifest.permission.READ_EXTERNAL_STORAGE
-                )
-            ) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, android.Manifest.permission.READ_EXTERNAL_STORAGE)) {
                 showPermissionDeniedDialog()
             } else {
-                ActivityCompat.requestPermissions(
-                    this, arrayOf(
-                        android.Manifest.permission.READ_EXTERNAL_STORAGE
-                    ), REQUEST_CODE
-                )
+                ActivityCompat.requestPermissions(this, arrayOf(android.Manifest.permission.READ_EXTERNAL_STORAGE), REQUEST_CODE)
             }
             return false
         }
@@ -338,28 +330,61 @@ class Menu : AppCompatActivity() {
                 }
             }
             .setPositiveButton("Càmera") { view, _ ->
-                Toast.makeText(
-                    this, "A IMPLEMENTAR PELS ALUMNES", Toast.LENGTH_LONG).show()
-                view.dismiss()
+                // Creamos un Intent para abrir la cámara
+                val takePictureIntent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+                // Comprobamos si hay alguna aplicación de cámara disponible para manejar el Intent
+                if (takePictureIntent.resolveActivity(packageManager) != null) {
+                    // Si hay una aplicación de cámara, iniciamos la actividad de la cámara
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                } else {
+                    // Si no hay ninguna aplicación de cámara disponible, mostramos un mensaje de error
+                    Toast.makeText(this, "No hay aplicación de cámara disponible", Toast.LENGTH_SHORT).show()
+                }
+                view.dismiss() // Cerramos el diálogo
             }
+
             .setCancelable(false)
             .create()
         dialog.show()
     }
 
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val REQUEST_CODE = 201
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
             imatgeUri = data?.data!!
             imatgePerfil.setImageURI(imatgeUri)
             pujarFoto(imatgeUri)
-
+            Toast.makeText(this, "AAAAAAAAAAAAAAAAAAAAAAAAAA", Toast.LENGTH_SHORT).show()
         } else {
             Toast.makeText(
                 this, "Error recuperant imatge de galeria", Toast.LENGTH_SHORT).show()
         }
+    }*/
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val REQUEST_CODE = 201
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            // Resultado de la galería
+            imatgeUri = data?.data!!
+            imatgePerfil.setImageURI(imatgeUri)
+            pujarFoto(imatgeUri)
+            Toast.makeText(this, "Imagen seleccionada de la galería", Toast.LENGTH_SHORT).show()
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            // Resultado de la captura de imagen de la cámara
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            // Ahora puedes hacer lo que quieras con la imagen capturada
+            // Por ejemplo, puedes establecerla en un ImageView
+            imatgePerfil.setImageBitmap(imageBitmap)
+            // También puedes guardarla en almacenamiento o subirla a Firebase Storage
+            // según tus necesidades
+            Toast.makeText(this, "Imagen capturada desde la cámara", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Error al obtener la imagen", Toast.LENGTH_SHORT).show()
+        }
     }
+
 
     private fun pujarFoto(imatgeUri: Uri) {
         var folderReference: StorageReference = storageReference.child("FotosPerfil")
