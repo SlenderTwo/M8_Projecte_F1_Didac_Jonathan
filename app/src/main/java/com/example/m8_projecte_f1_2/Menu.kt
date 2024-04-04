@@ -227,9 +227,9 @@ class Menu : AppCompatActivity() {
                         poblacio.setText(ds.child("Poblacio").getValue().toString())
                         edat.setText(ds.child("Edat").getValue().toString())
 
+                        val imatge: String = ds.child("Imatge").getValue().toString()
 
                         try {
-                            val imatge: String = ds.child("Imatge").getValue().toString()
                             Picasso.get().load(imatge).into(imatgePerfil);
                         } catch (e: Exception) {
                             Picasso.get().load(R.drawable.carlos).into(imatgePerfil)
