@@ -2,10 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
-
-
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -17,6 +15,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.M8_Projecte_f1_2"
         tools:targetApi="31">
+        <activity
+            android:name=".Jugador"
+            android:exported="false" />
+        <activity
+            android:name=".adapter.JuadorsAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".RecyclerView"
+            android:exported="false" />
+        <activity
+            android:name=".Player"
+            android:exported="false" />
+        <activity
+            android:name=".PlayersAdapter"
+            android:exported="false" />
+        <activity
+            android:name=".Llista"
+            android:exported="false" />
         <activity
             android:name=".MainActivity2"
             android:exported="false" />
@@ -41,9 +57,9 @@
         <activity
             android:name=".Registre"
             android:exported="false" />
-        <activity android:name=".QuizActivity"
-            android:exported="false">
-        </activity>
+        <activity
+            android:name=".QuizActivity"
+            android:exported="false" />
         <activity
             android:name=".Splash"
             android:exported="true"

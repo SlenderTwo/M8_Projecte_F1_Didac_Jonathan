@@ -158,10 +158,7 @@ class Menu : AppCompatActivity() {
 
     private fun usuariLogejat() {
         if (user != null) {
-            Toast.makeText(
-                this, "Jugador logejat",
-                Toast.LENGTH_SHORT
-            ).show()
+            Toast.makeText(this, "Jugador logejat", Toast.LENGTH_SHORT).show()
             consulta()
         } else {
             val intent = Intent(this, MainActivity::class.java)
@@ -196,15 +193,11 @@ class Menu : AppCompatActivity() {
         // els subnodes (fills) es recuperen amb getChildren
         // es poden llegir com un llistat d'objectes Datasnapshots
         // o navegar a subnodes concrets amb child("nomdelsubnode")
-        var database: FirebaseDatabase =
-            FirebaseDatabase.getInstance("https://m8-projecte-f1-2-default-rtdb.europe-west1.firebasedatabase.app/")
+        var database: FirebaseDatabase = FirebaseDatabase.getInstance("https://m8-projecte-f1-2-default-rtdb.europe-west1.firebasedatabase.app/")
         var bdreference: DatabaseReference = database.getReference("DATA BASE JUGADORS")
         bdreference.addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                Log.i(
-                    "pepe", "arrel value" +
-                            snapshot.getValue().toString()
-                )
+                Log.i("pepe", "arrel value" + snapshot.getValue().toString())
                 Log.i("pepe", "arrel key" + snapshot.key.toString())
                 // ara capturem tots els fills
                 var trobat: Boolean = false
@@ -297,17 +290,18 @@ class Menu : AppCompatActivity() {
             .setTitle("Permission Denied")
             .setMessage("Permission is denied, Please allow permissions from App Settings.")
             .setPositiveButton("App Settings", DialogInterface.OnClickListener { dialogInterface, i ->
-                    // send to app settings if permission is denied permanently
-                    val intent = Intent()
-                    intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
-                    val uri = Uri.fromParts("package", getPackageName(), null)
-                    intent.data = uri
-                    startActivity(intent)
-                }).setNegativeButton("Cancel", null).show()
+                // send to app settings if permission is denied permanently
+                val intent = Intent()
+                intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+                val uri = Uri.fromParts("package", getPackageName(), null)
+                intent.data = uri
+                startActivity(intent)
+            }).setNegativeButton("Cancel", null).show()
     }
 //---------------------------------------------------------------
 
     private fun canviaLaImatge() {
+
         //utilitzarem un alertdialog que seleccionara de galeria o agafar una foto
         // Si volem fer un AlertDialog amb més de dos elements (amb una llista),
         // Aixó ho fariem amb fragments (que veurem més endevant)
@@ -398,7 +392,6 @@ class Menu : AppCompatActivity() {
             imatgePerfil.setImageURI(imatgeUri)
             pujarFoto(imatgeUri)
             Log.d("PUJAR_FOTO", "URI de la imagen: $imatgeUri")
-
             Toast.makeText(this, "Imagen seleccionada de la galería", Toast.LENGTH_SHORT).show()
         } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             // Resultado de la captura de imagen de la cámara
@@ -433,33 +426,33 @@ class Menu : AppCompatActivity() {
 
 
 
-   /* private fun pujarFoto(imatgeUri: Uri) {
-        var folderReference: StorageReference = storageReference.child("FotosPerfil")
-        var Uids: String = uid.getText().toString()
-        //Podriem fer:
-        //folderReference.child(Uids).putFile(imatgeUri)
-        //Pero utilitzem el mètode recomanat a la documentació
-        // https://firebase.google.com/docs/storage/android/uploadfiles
-        // Get the data from an ImageView as bytes
-        imatgePerfil.isDrawingCacheEnabled = true
-        imatgePerfil.buildDrawingCache()
-        val bitmap = (imatgePerfil.drawable as BitmapDrawable).bitmap
-        val baos = ByteArrayOutputStream()
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
-        val data = baos.toByteArray()
-        var uploadTask = folderReference.child(Uids).putBytes(data)
+    /* private fun pujarFoto(imatgeUri: Uri) {
+         var folderReference: StorageReference = storageReference.child("FotosPerfil")
+         var Uids: String = uid.getText().toString()
+         //Podriem fer:
+         //folderReference.child(Uids).putFile(imatgeUri)
+         //Pero utilitzem el mètode recomanat a la documentació
+         // https://firebase.google.com/docs/storage/android/uploadfiles
+         // Get the data from an ImageView as bytes
+         imatgePerfil.isDrawingCacheEnabled = true
+         imatgePerfil.buildDrawingCache()
+         val bitmap = (imatgePerfil.drawable as BitmapDrawable).bitmap
+         val baos = ByteArrayOutputStream()
+         bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+         val data = baos.toByteArray()
+         var uploadTask = folderReference.child(Uids).putBytes(data)
 
-        uploadTask.addOnFailureListener {
-            // Handle unsuccessful uploads
-            Toast.makeText(
-                this, "Error enviant imatge a Storage", Toast.LENGTH_SHORT).show()
-        }.addOnSuccessListener { taskSnapshot ->
-            // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
-            // ...
-        }
-    }*/
+         uploadTask.addOnFailureListener {
+             // Handle unsuccessful uploads
+             Toast.makeText(
+                 this, "Error enviant imatge a Storage", Toast.LENGTH_SHORT).show()
+         }.addOnSuccessListener { taskSnapshot ->
+             // taskSnapshot.metadata contains file metadata such as size, content-type, etc.
+             // ...
+         }
+     }*/
 
-    private fun pujarFoto(imatgeUri: Uri) {
+    /*private fun pujarFoto(imatgeUri: Uri) {
         var folderReference: StorageReference = storageReference.child("FotosPerfil")
         var Uids: String = uid.getText().toString()
         // Subir la imagen al Firestore
@@ -480,6 +473,95 @@ class Menu : AppCompatActivity() {
                     Toast.LENGTH_SHORT
                 ).show()
             }
+    }*/
+
+
+    private fun pujarFoto(imagenUri: Uri) {
+        val uid = user?.uid // Obtenemos el ID del usuario actual
+        if (uid != null) {
+            val storageReference = FirebaseStorage.getInstance().reference.child("FotosPerfil").child(uid)
+
+            // Subimos la imagen al Firebase Storage
+            storageReference.putFile(imagenUri)
+                .addOnSuccessListener { taskSnapshot ->
+                    // Si la subida es exitosa, obtenemos la URL de descarga
+                    storageReference.downloadUrl.addOnSuccessListener { uri ->
+                        val downloadUrl = uri.toString()
+
+                        // Actualizamos la URL de la imagen en la base de datos
+                        val database = FirebaseDatabase.getInstance()
+                        val referencia = database.getReference("DATA BASE JUGADORS").child(uid)
+                        referencia.child("Imatge").setValue(downloadUrl)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Imagen de perfil actualizada correctamente", Toast.LENGTH_SHORT).show()
+
+                                // Cargamos la imagen en el ImageView usando Picasso
+                                Picasso.get().load(downloadUrl).into(imatgePerfil)
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Error al actualizar la imagen de perfil: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al subir la imagen de perfil: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    private fun actualizarPuntuacion(puntuacion: Int) {
+        val uid = user?.uid // Obtenemos el ID del usuario actual
+        if (uid != null) {
+            val database = FirebaseDatabase.getInstance()
+            val referencia = database.getReference("DATA BASE JUGADORS").child(uid)
+
+            // Actualizamos la puntuación del usuario en la base de datos
+            referencia.child("Puntuacio").setValue(puntuacion)
+                .addOnSuccessListener {
+                    Toast.makeText(this, "Puntuación actualizada correctamente", Toast.LENGTH_SHORT).show()
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al actualizar la puntuación: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+
+    private fun subirImagenPerfil(imagenUri: Uri) {
+        val uid = user?.uid // Obtenemos el ID del usuario actual
+        if (uid != null) {
+            val storageReference = FirebaseStorage.getInstance().reference.child("FotosPerfil").child(uid)
+
+            // Subimos la imagen al Firebase Storage
+            storageReference.putFile(imagenUri)
+                .addOnSuccessListener { taskSnapshot ->
+                    // Si la subida es exitosa, obtenemos la URL de descarga
+                    storageReference.downloadUrl.addOnSuccessListener { uri ->
+                        val downloadUrl = uri.toString()
+
+                        // Actualizamos la URL de la imagen en la base de datos
+                        val database = FirebaseDatabase.getInstance()
+                        val referencia = database.getReference("DATA BASE JUGADORS").child(uid)
+                        referencia.child("Imatge").setValue(downloadUrl)
+                            .addOnSuccessListener {
+                                Toast.makeText(this, "Imagen de perfil actualizada correctamente", Toast.LENGTH_SHORT).show()
+                            }
+                            .addOnFailureListener { e ->
+                                Toast.makeText(this, "Error al actualizar la imagen de perfil: ${e.message}", Toast.LENGTH_SHORT).show()
+                            }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(this, "Error al subir la imagen de perfil: ${e.message}", Toast.LENGTH_SHORT).show()
+                }
+        } else {
+            Toast.makeText(this, "Error: Usuario no identificado", Toast.LENGTH_SHORT).show()
+        }
     }
 
 
