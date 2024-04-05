@@ -65,6 +65,8 @@ class Menu : AppCompatActivity() {
     // Variables per a gravar a Storage
     lateinit var storageReference: StorageReference
 
+    lateinit var passBtn: Button
+
     companion object {
         private const val REQUEST_IMAGE_CAPTURE = 1
     }
@@ -99,6 +101,12 @@ class Menu : AppCompatActivity() {
             val intent = Intent(this, SeleccioNivel::class.java)
             startActivity(intent)
             //finish()
+        }
+
+
+        passBtn = findViewById<Button>(R.id.cambiaPass)
+        passBtn.setOnClickListener(){
+            cambiaContrasena()
         }
 
         //Aquí creem un tipus de lletra a partir de una font
@@ -612,6 +620,37 @@ class Menu : AppCompatActivity() {
     }
 
 
+
+    private fun cambiaContrasena(){
+        val user = FirebaseAuth.getInstance().currentUser
+        user?.let {
+            val email = user.email
+            email?.let {
+                FirebaseAuth.getInstance().sendPasswordResetEmail(email)
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            // Email de reinicio de contraseña enviado con éxito
+                            val dialog = AlertDialog.Builder(this)
+                                .setTitle("CANVIAR CONTRASEÑA")
+                                .setMessage("Se le ha enviado un correo para cambiar su contraseña")
+                                .setNegativeButton("Aceptar") { dialog, _ ->
+                                    dialog.dismiss()
+                                }
+                                .setCancelable(false)
+                                .create()
+                            dialog.show()
+                        } else {
+                            // Error al enviar el correo electrónico de reinicio de contraseña
+                            Toast.makeText(
+                                this,
+                                "Error al enviar el correo electrónico para restablecer la contraseña.",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+            }
+        }
+    }
 
 
 }

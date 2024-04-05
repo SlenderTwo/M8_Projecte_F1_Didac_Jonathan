@@ -29,5 +29,7 @@
     <string name="poblacio"> -- </string>
     <string name="editarBtn">Change Image</string>
 
+    <string name="exitbtn">Exit</string>
 
+    <string name="cambiaPassBtn">Change Password</string>
 </resources>

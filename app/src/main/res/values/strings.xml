@@ -31,5 +31,7 @@
 
     <string name="exitbtn">Salir</string>
 
+    <string name="cambiaPassBtn">Cambiar Contraseña</string>
+
 
 </resources>
