@@ -383,7 +383,18 @@ class Menu : AppCompatActivity() {
             Toast.makeText(this, "Error al obtener la imagen", Toast.LENGTH_SHORT).show()
         }
     }*/
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+
+
+
+
+
+
+
+
+
+
+
+    /*override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         val REQUEST_CODE = 201
         if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
@@ -420,7 +431,43 @@ class Menu : AppCompatActivity() {
             null
         )
         return Uri.parse(path)
+    }*/
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        val REQUEST_CODE = 201
+        if (requestCode == REQUEST_CODE && resultCode == RESULT_OK) {
+            // Resultado de la galería
+            imatgeUri = data?.data!!
+            imatgePerfil.setImageURI(imatgeUri)
+            pujarFoto(imatgeUri)
+            Log.d("PUJAR_FOTO", "URI de la imagen: $imatgeUri")
+            Toast.makeText(this, "Imagen seleccionada de la galería", Toast.LENGTH_SHORT).show()
+        } else if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            // Resultado de la captura de imagen de la cámara
+            val imageBitmap = data?.extras?.get("data") as Bitmap
+            // Ahora puedes hacer lo que quieras con la imagen capturada
+            // Por ejemplo, puedes establecerla en un ImageView
+            imatgePerfil.setImageBitmap(imageBitmap)
+            // También puedes guardarla en almacenamiento o subirla a Firebase Storage
+            // según tus necesidades
+            // Convertir la imagen a URI para subirla
+            val imageUri = getImageUri(imageBitmap)
+            pujarFoto(imageUri)
+            Toast.makeText(this, "Imagen capturada desde la cámara", Toast.LENGTH_SHORT).show()
+        } else {
+            Toast.makeText(this, "Error al obtener la imagen", Toast.LENGTH_SHORT).show()
+        }
     }
+
+    private fun getImageUri(inImage: Bitmap): Uri {
+        val bytes = ByteArrayOutputStream()
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes)
+        val path = MediaStore.Images.Media.insertImage(contentResolver, inImage, "Title", null)
+        return Uri.parse(path)
+    }
+
 
 
 

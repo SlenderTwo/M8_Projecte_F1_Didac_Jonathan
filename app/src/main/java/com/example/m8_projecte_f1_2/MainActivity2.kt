@@ -9,10 +9,8 @@ import android.widget.Button
 import android.widget.RadioButton
 import android.widget.TextView
 import android.widget.Toast
-import com.google.firebase.database.FirebaseDatabase
-import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.auth.FirebaseAuth
-
+import com.google.firebase.database.FirebaseDatabase
 
 class MainActivity2 : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -90,7 +88,8 @@ class QuizActivity : AppCompatActivity() {
         nivelActual = intent.getIntExtra("NIVEL", 0)
 
         sharedPreferences = getSharedPreferences("Puntuacion", Context.MODE_PRIVATE)
-        puntuacion = sharedPreferences.getInt("puntuacion", 0)
+        // Obtener la puntuación del usuario actualmente registrado
+        puntuacion = obtenerPuntuacionActual()
 
         // Inicializar las vistas
         submit_button = findViewById(R.id.submit_button)
@@ -102,36 +101,13 @@ class QuizActivity : AppCompatActivity() {
         option_4 = findViewById(R.id.option_4)
         score_text_view = findViewById(R.id.score_text_view)  // Inicializamos el TextView de la puntuación
 
-
         level_text_view.text = "Nivel: ${nivelActual + 1}"
         score_text_view.text = "Puntuación: $puntuacion"
-
 
         quiz = Quiz()
 
         mostrarPregunta()
 
-        /*submit_button.setOnClickListener {
-            if (respuestaCorrecta()) {
-                // Asignamos puntos según el nivel de la pregunta
-                puntuacion += nivelActual + 1
-                // Mostramos la puntuación actualizada
-                score_text_view.text = "Puntuación: $puntuacion"
-
-                preguntaActual++
-                if (preguntaActual < quiz.getNumeroDePreguntas(nivelActual)) {
-                    mostrarPregunta()
-                } else {
-                    Toast.makeText(this, "¡Has terminado el nivel!", Toast.LENGTH_SHORT).show()
-                    guardarPuntuacion()
-                    finish() // Finaliza la actividad y vuelve a LevelSelectionActivity
-                }
-            } else {
-                puntuacion -= nivelActual + 1
-                Toast.makeText(this, "Lo siento, esa respuesta es incorrecta. Intenta de nuevo.", Toast.LENGTH_SHORT).show()
-
-            }
-        }*/
         submit_button.setOnClickListener {
             if (respuestaCorrecta()) {
                 // Asignamos puntos según el nivel de la pregunta
@@ -152,8 +128,6 @@ class QuizActivity : AppCompatActivity() {
                 Toast.makeText(this, "Lo siento, esa respuesta es incorrecta. Intenta de nuevo.", Toast.LENGTH_SHORT).show()
             }
         }
-
-
     }
 
     private fun mostrarPregunta() {
@@ -175,33 +149,7 @@ class QuizActivity : AppCompatActivity() {
         }
         return respuestaSeleccionada == quiz.getPregunta(nivelActual, preguntaActual).respuestaCorrecta
     }
-    /*private fun guardarPuntuacion() {
-        val editor = sharedPreferences.edit()
-        editor.putInt("puntuacion", puntuacion)
-        editor.apply()
 
-    }*/
-   /* private fun guardarPuntuacion() {
-        val editor = sharedPreferences.edit()
-        editor.putInt("puntuacion", puntuacion)
-        editor.apply()
-
-        // Aquí subimos la puntuación al Firebase
-        val database = FirebaseDatabase.getInstance()
-        val bdreference = database.getReference("DATA BASE JUGADORES")
-
-        // Obtén el Uid del usuario actualmente logueado
-        val Uid = "el_uid_del_usuario_actual"
-
-        // Actualiza la puntuación del jugador en Firebase
-        bdreference.child(Uid).child("Puntuacion").setValue(puntuacion.toString())
-            .addOnSuccessListener {
-                Toast.makeText(this, "Puntuación actualizada correctamente en Firebase", Toast.LENGTH_SHORT).show()
-            }
-            .addOnFailureListener { exception ->
-                Toast.makeText(this, "Error al actualizar la puntuación en Firebase: ${exception.message}", Toast.LENGTH_SHORT).show()
-            }
-    }*/
     private fun guardarPuntuacion() {
         val editor = sharedPreferences.edit()
         editor.putInt("puntuacion", puntuacion)
@@ -223,5 +171,12 @@ class QuizActivity : AppCompatActivity() {
         }
     }
 
-
+    private fun obtenerPuntuacionActual(): Int {
+        // Obtener la puntuación del usuario actualmente registrado
+        val uid = FirebaseAuth.getInstance().currentUser?.uid
+        if (uid != null) {
+            return sharedPreferences.getInt(uid, 0)
+        }
+        return 0
+    }
 }
