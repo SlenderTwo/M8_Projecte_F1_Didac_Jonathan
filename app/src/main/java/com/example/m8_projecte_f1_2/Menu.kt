@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Typeface
-import android.graphics.drawable.BitmapDrawable
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -29,7 +28,6 @@ import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
 import com.squareup.picasso.Picasso
 import java.io.ByteArrayOutputStream
-import android.graphics.BitmapFactory
 import android.provider.MediaStore
 
 
@@ -129,6 +127,11 @@ class Menu : AppCompatActivity() {
         //fem el mateix amb el text dels botons
         tancarSessio.setTypeface(tf)
         CreditsBtn.setTypeface(tf)
+        CreditsBtn.setOnClickListener{
+            val intent = Intent(this, credits::class.java)
+            intent.putExtra("Credits",3)
+            startActivity(intent)
+        }
         PuntuacionsBtn.setTypeface(tf)
         jugarBtn.setTypeface(tf)
 
@@ -233,7 +236,7 @@ class Menu : AppCompatActivity() {
                         try {
                             Picasso.get().load(imatge).into(imatgePerfil);
                         } catch (e: Exception) {
-                            Picasso.get().load(R.drawable.carlos).into(imatgePerfil)
+                            Picasso.get().load(R.drawable.jugador).into(imatgePerfil)
                         }
 
                     }
@@ -650,7 +653,7 @@ class Menu : AppCompatActivity() {
                     }
             }
         }
-    }
+    } 
 
 
 }

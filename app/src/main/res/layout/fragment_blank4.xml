@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".BlankFragment4"
+    android:background="#FFFFFF">
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:id="@+id/containeer"
+        android:background="#FFFFFF"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:fontFamily="sans-serif-black"
+        android:paddingTop="279dp"
+        android:text="ART DIRECTOR"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+        android:textSize="40dp"
+        android:textColor="#000000" />
+
+    <TextView
+        android:textColor="#000000"
+        android:id="@+id/containeer2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="350dp"
+        android:text="Didac Martinez"
+        android:textAlignment="center"
+        android:textAllCaps="true"
+        android:textSize="30dp" />
+
+</FrameLayout>
