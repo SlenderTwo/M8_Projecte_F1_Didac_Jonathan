@@ -22,29 +22,6 @@
             android:name=".credits"
             android:exported="false" />
         <activity
-            android:name=".MainActivity3"
-            android:exported="false"
-            android:label="@string/title_activity_main3"
-            android:theme="@style/Theme.M8_Projecte_f1_2" />
-        <activity
-            android:name=".Jugador"
-            android:exported="false" />
-        <activity
-            android:name=".adapter.JuadorsAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".RecyclerView"
-            android:exported="false" />
-        <activity
-            android:name=".Player"
-            android:exported="false" />
-        <activity
-            android:name=".PlayersAdapter"
-            android:exported="false" />
-        <activity
-            android:name=".Llista"
-            android:exported="false" />
-        <activity
             android:name=".MainActivity2"
             android:exported="false" />
         <activity

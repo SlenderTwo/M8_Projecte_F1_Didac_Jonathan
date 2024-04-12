@@ -7,7 +7,6 @@
     android:background="@drawable/f1"
     tools:context=".MainActivity">
 
-    <!-- activity_quiz.xml -->
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="238dp"

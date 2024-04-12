@@ -32,7 +32,6 @@ class Quiz {
     }
 
     private fun inicializarPreguntas() {
-        // Puedes reemplazar estas preguntas y opciones con las tuyas
         val nivel1 = mutableListOf<Pregunta>()
         nivel1.add(Pregunta("¿Quien es conocido como el kaiser en el mundo de la formula 1?", arrayOf("Schumacher", "Alonso", "Vettel", "Hamilton"), 0))
         nivel1.add(Pregunta("¿Quién ganó el Campeonato Mundial de Pilotos de la Fórmula 1 en 2020?", arrayOf("Max Verstappen", "Lewis Hamilton", "Valtteri Bottas", "Sebastian Vettel"), 1))
